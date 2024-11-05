@@ -1,0 +1,11 @@
+README.md
+setup.py
+CloudVolume/BeamImager.py
+CloudVolume/CloudVolume.py
+CloudVolume/__init__.py
+CloudVolume_multibeam.egg-info/PKG-INFO
+CloudVolume_multibeam.egg-info/SOURCES.txt
+CloudVolume_multibeam.egg-info/dependency_links.txt
+CloudVolume_multibeam.egg-info/entry_points.txt
+CloudVolume_multibeam.egg-info/requires.txt
+CloudVolume_multibeam.egg-info/top_level.txt
