@@ -50,16 +50,28 @@ This will launch the application’s GUI.
 
 ## Installation and running GUI manually
 
-If you prefer to install the required libraries manually, you can do so by running:
+To clone this repository, follow these steps:
+
+1. Open **Git Bash**.
+2. Navigate to the directory where you want to clone the repository.
+3. Run the following command:
 
 ```bash
+git clone https://github.com/SamiraLashkari/CloudVolume_multibeam
+```
+You can download the repository from website too. 
+
+Then, you can install all dependencies in your environment by running the following command. First, navigate to the `CloudVolume_multibeam` folder in your system:
+
+```bash
+cd CloudVolume_multibeam
 pip install -r requirements.txt
 ```
 
 To launch the graphical user interface (GUI), execute the following command in your terminal:
 
 ```bash
-python CloudVolume.py
+python CloudVolume/CloudVolume.py
 ```
 ![GUI-image](https://github.com/SamiraLashkari/CloudVolume_multibeam/blob/main/GUI_CloudVolume.jpg)
 
@@ -85,6 +97,7 @@ python CloudVolume.py
 
 **Radius Outlier Removal**:
    - Define minimum points and radius for outlier removal.
+    
 ## Part3: Clustering (green)
 **K-Means Clustering**:
    - Automatically group similar points.
@@ -99,12 +112,39 @@ python CloudVolume.py
    - Set minimum cluster size and samples.
 
 **Drawing Clusters**:
-    - Manually draw cluster boundaries if needed.
+      
+  If the clustering algorithms don’t yield satisfactory results—especially in cases where clusters are very close with little distinction—you can manually define boundaries by drawing lines. Here’s how:
+
+  1. Press the **Start** button. This will open another GUI window.
+  2. To begin drawing lines between clusters, click the **Draw Curve** button. Each click will allow you to place points and connect them, forming boundaries.
+  3. Once you’ve finished drawing borders for one cluster, press **Assign Labels** to label it.
+  4. Continue drawing boundaries until all points belong to a cluster.
+  5. When finished, press the **Finish** button.
+  6. Return to the main GUI and click **Get Clusters** to finalize the clustering.
+
+This will help to refine clusters manually, especially in challenging cases.
+![GUI-image](https://github.com/SamiraLashkari/CloudVolume_multibeam/blob/main/Drawing_clusters.jpg)
+
+## Part 4: Result section (purple)
+
+- **Refining and Managing Result**:
+
+  After completing the initial clustering step, you can add these clusters to the result by pressing the **Add Clusters** button. The clusters will be updated based on their size and assigned to each cluster button, labeled from 1 to 40.
+
+  Additional options for refining clusters include (each cluster for these operations can be selected by checking the square beside its label):
     
-## Part4: Volume calculation (yellow)
-**Result Section**:
-    - Edit, add, remove, and merge clusters to the filnal result
-    - Update and check result by clicking on the choosen cluster to add, remove or merge into result.
+  - **Remove Clusters**: Remove selected clusters from the results.
+  - **Merge Clusters**: Merge clusters to achieve the desired clustering arrangement.
+
+  After each operation (add, merge, or remove), click the **Update** button to view the changes in the image, which will refresh to reflect the updated clustering.
+
+  To reset or start over, use the following options:
+  
+  - **Empty Result**: Clears all clusters from the result.
+  - **Convert All to Pointcloud**: Merges all points back into a single point cloud, allowing you to start the clustering process from the beginning.
+
+    
+## Part 5: Volume calculation (yellow)
 
 **Interpolation**:
     - Estimate points between known data points in point cloud of each volume (you can choose any cluster to process the rest).
@@ -114,6 +154,11 @@ python CloudVolume.py
     - Define thresholds for voxelization.
     - Set upper and lower thresholds for weighted voxelization.
     - Calculate voxel weights based on point counts.
+    - at the moment the 
 
 **Calculate Result Volume**:
     - Add cluster volumes to total volume. 
+
+## Part 6: Saving results (bright green)    
+
+    
