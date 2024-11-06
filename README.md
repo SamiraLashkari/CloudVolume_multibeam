@@ -14,9 +14,8 @@ You can find sample data [here](https://drive.google.com/file/d/15rBiuT27kIJQX5p
 
 ## Requirements
 
-It is important to set the exact version of libraries and python version. You can download anaconda here which makes it easier to set the desired version of python and libraries:
+It is important to set the exact version of libraries and python. You can download anaconda here which makes it easier to set the desired version of python and libraries:
 [here](https://www.anaconda.com/download). 
-
 
 - **Python 3.9.20**: Please install Python 3.9.20 in your environment, as the open3d library is not compatible with more recent versions of Python.
 
@@ -25,7 +24,6 @@ Open Anaconda powershell prompt and write the command below. You give any name t
 conda create -n my_env python=3.9.20
 conda activate my_env
 ```
-  
 - **Dependencies**:
   - `open3d==0.17.0`
   - `hdbscan==0.8.33`
@@ -75,7 +73,7 @@ python CloudVolume/CloudVolume.py
 ```
 ![GUI-image](https://github.com/SamiraLashkari/CloudVolume_multibeam/blob/main/GUI_CloudVolume.jpg)
 
-## Part 1: uploading data
+## Uploading data
 **Data Upload**:
    - Upload data in .csv or .txt format with columns X, Y, Z, intensity, ping_number, and beam.
    - After upload, view intensity histogram.
@@ -83,10 +81,10 @@ python CloudVolume/CloudVolume.py
 **Default Values**:
    - Choose species to set default parameter values.
      
-## Part 2: Filtering (red)
+## Filtering (red)
 **Remove Noise**:
    - Visualize beam number histogram to identify noise.
-   - Remove noise using 'Remove Most Frequent'.
+   - Remove noise using **Remove Most Frequent**.
    - Adjust bottom data removal ratio for profile noise.
 
 **Setting Threshold**:
@@ -97,8 +95,22 @@ python CloudVolume/CloudVolume.py
 
 **Radius Outlier Removal**:
    - Define minimum points and radius for outlier removal.
-    
-## Part3: Clustering (green)
+
+## Saving Data as Point Cloud or DataFrame (blue)
+
+At any point in the process before clustering, you can save the data either as a **point cloud** or a **dataframe**:
+
+- **Saving as DataFrame**:  
+  This allows you to load the data later directly from the GUI, enabling you to continue processing from where you left off.
+
+- **Saving as Point Cloud**:  
+  Point cloud data can be loaded into platforms like **CloudCompare** for visualization and analysis.
+
+Before saving, you can verify the point cloud size by checking the fields **Size of Current Point Cloud** and **Size of Previous Point Cloud** to ensure you are saving the correct version.
+
+This flexibility ensures you can choose the format that best suits your workflow, whether for further processing or visualization.
+
+## Clustering (green)
 **K-Means Clustering**:
    - Automatically group similar points.
    - Choose number of clusters.
@@ -125,7 +137,7 @@ python CloudVolume/CloudVolume.py
 This will help to refine clusters manually, especially in challenging cases.
 ![GUI-image](https://github.com/SamiraLashkari/CloudVolume_multibeam/blob/main/Drawing_clusters.jpg)
 
-## Part 4: Result section (purple)
+## Result section (purple)
 
 - **Refining and Managing Result**:
 
@@ -141,24 +153,32 @@ This will help to refine clusters manually, especially in challenging cases.
   To reset or start over, use the following options:
   
   - **Empty Result**: Clears all clusters from the result.
+    
   - **Convert All to Pointcloud**: Merges all points back into a single point cloud, allowing you to start the clustering process from the beginning.
 
     
-## Part 5: Volume calculation (yellow)
+## Volume calculation (yellow)
 
 **Interpolation**:
-    - Estimate points between known data points in point cloud of each volume (you can choose any cluster to process the rest).
+- Estimate points between known data points in point cloud of each volume to fill the gap between pings (you can choose any cluster to process the rest)
 
 **Voxelization**:
-    - Convert point cloud to voxel grid.
-    - Define thresholds for voxelization.
-    - Set upper and lower thresholds for weighted voxelization.
-    - Calculate voxel weights based on point counts.
-    - at the moment the 
-
-**Calculate Result Volume**:
-    - Add cluster volumes to total volume. 
+- Convert point cloud to voxel grid
+- Define the size of voxel
+- Set upper and lower thresholds for weighted voxelization (the default value for upper and lower threshold is d10 and d25 for number of points)
+- Calculate the volume without and with weighted voxelization
+   
 
 ## Part 6: Saving results (bright green)    
 
+In this section, you can select clusters to save by checking the box next to each cluster and then clicking the **Add Chosen Cluster** button. Once selected, the clusters will be added to the list in the bottom-left corner, with their volumes calculated using both methods mentioned before.
+
+You can remove the last cluster from the list by clicking the **Remove Last Cluster** button. 
+
+When all desired clusters are in the list, click **Save Clusters and Volume**. This action will save:
+
+- A `.csv` file containing all volume information for the selected clusters.
+- Individual clusters as `.pcd` files (point cloud format).
+
+This process ensures both the volume data and cluster geometries are preserved for further analysis.
     
