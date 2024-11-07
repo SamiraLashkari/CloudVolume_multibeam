@@ -15,7 +15,7 @@ setup(
     ],
      entry_points={
         "console_scripts": [
-            "CloudVolume = CloudVolume.CloudVolume:main",  # Points to main() function in app.py
+            "CloudVolume = CloudVolume.CloudVolume:main",  
         ]
     },
     description="Visualization and calculation volume of under water installation using processed multibeam data",
