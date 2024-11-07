@@ -169,7 +169,7 @@ This will help to refine clusters manually, especially in challenging cases.
 - Calculate the volume without and with weighted voxelization
    
 
-## Part 6: Saving results (bright green)    
+## Saving results (bright green)    
 
 In this section, you can select clusters to save by checking the box next to each cluster and then clicking the **Add Chosen Cluster** button. Once selected, the clusters will be added to the list in the bottom-left corner, with their volumes calculated using both methods mentioned before.
 
