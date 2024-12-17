@@ -2,13 +2,13 @@
 
 ## Overview
 
-This repository provides code for visualizing and calculating the volume of aquaculture installations (it tested for seaweed and mussels) using processed data from a multibeam ecosounder sensor.
+This repository provides code for visualizing and calculating the volume of segmented parts of point cloud data using processed data from a multibeam echosounder. Despite being developed for multibeam water column data on mussels and seaweed, it can be used for any point cloud file where clustering is desired.
 
 If you have any question, don't hesitate to contact me: samira.lashkari@gmail.com
 
 ## Data Requirements
 
-The uploaded data should have the following six columns in this specific order: 'x', 'y', 'z', 'intensity', 'ping_number', 'beam' and be .txt or .csv format. Please ensure that there are no indices for the columns.
+The uploaded data must have the following four columns in this specific order: 'x', 'y', 'z' and 'intensity' and be in .txt or .csv format. If you wish to use all functionalities of CloudVolume, 'ping_number' and 'beam' should be added to the files as well. Please ensure that there are no indices for the columns.
 
 You can find sample data [here](https://drive.google.com/file/d/15rBiuT27kIJQX5pq0yL5JK0sN9E-XCw0/view?usp=drive_link) to process with the developed GUI.
 
@@ -57,7 +57,7 @@ To clone this repository, follow these steps:
 ```bash
 git clone https://github.com/SamiraLashkari/CloudVolume_multibeam
 ```
-You can download the repository from website too. 
+You can download the repository from website as well. 
 
 Then, you can install all dependencies in your environment by running the following command. First, navigate to the `CloudVolume_multibeam` folder in your system:
 
@@ -75,33 +75,34 @@ python CloudVolume/CloudVolume.py
 
 ## Uploading data
 **Data Upload**:
-   - Upload data in .csv or .txt format with columns X, Y, Z, intensity, ping_number, and beam.
-   - After upload, view intensity histogram.
+   - Upload data in .csv or .txt format with columns X, Y, Z, intensity and optionally ping_number, and beam.
+   - After upload, view the intensity histogram.
 
 **Default Values**:
-   - Choose species to set default parameter values.
+   - Choose species to set default parameter values for these species (values based on learning dataset) or define your own values.
      
-## Filtering (red)
+## 🔴 Filtering
+
 **Remove Noise**:
    - Visualize beam number histogram to identify noise.
-   - Remove noise using **Remove Most Frequent**.
-   - Adjust bottom data removal ratio for profile noise.
+   - Remove the most frequently occurring bin by using  **Remove Most Frequent**.
+   - Adjust bottom data removal ratio to delete the seafloor interference bands. This step removes a percentage (from the bottom up) of the data.
 
 **Setting Threshold**:
-   - Adjust threshold if necessary and filter.
+   - Adjust the thresholds if necessary (or keep the default values) and filter.
 
 **Statistical Outlier Removal**:
-   - Set number of neighbors and standard ratio for outlier removal.
+   - Set number of neighbours and standard ratio for outlier removal.
 
 **Radius Outlier Removal**:
-   - Define minimum points and radius for outlier removal.
+   - Define minimum amount of points and radius for outlier removal.
 
-## Saving Data as Point Cloud or DataFrame (blue)
+## 	🔵 Saving Data as Point Cloud or DataFrame 
 
-At any point in the process before clustering, you can save the data either as a **point cloud** or a **dataframe**:
+At any point in the process before clustering, you can save the data either as a **point cloud** (.pcd)  or a **dataframe** (.csv):
 
 - **Saving as DataFrame**:  
-  This allows you to load the data later directly from the GUI, enabling you to continue processing from where you left off.
+  This allows you to load the saved data later directly from the GUI, enabling you to continue processing from where you left off.
 
 - **Saving as Point Cloud**:  
   Point cloud data can be loaded into platforms like **CloudCompare** for visualization and analysis.
@@ -110,45 +111,32 @@ Before saving, you can verify the point cloud size by checking the fields **Size
 
 This flexibility ensures you can choose the format that best suits your workflow, whether for further processing or visualization.
 
-## Clustering (green)
-**K-Means Clustering**:
-   - Automatically group similar points.
-   - Choose number of clusters.
+## 🟢 Clustering 
+**K-Means Clustering**: groups datapoints into a predefined amount of clusters based on proximity
 
-**GMM Clustering**:
-   - Identify hidden patterns with less rigid clusters.
-   - Choose number of clusters.
+**GMM Clustering**: identifies hidden patterns and groups data less rigidly into a predefined amount of clusters 
 
-**Hdbscan Clustering**:
-   - Identify clusters based on data point density.
-   - Set minimum cluster size and samples.
+**Hdbscan (Hierarchical Density-Based Spatial Clustering of Applications with Noise) Clustering**: identifies clusters based on data point density. A minimum cluster size and amount of samples within each cluster needs to be specified.
 
 **Drawing Clusters**:
       
-  If the clustering algorithms don’t yield satisfactory results—especially in cases where clusters are very close with little distinction—you can manually define boundaries by drawing lines. Here’s how:
+  If the clustering algorithms do not yield satisfactory results—especially in cases of close entanglement—you can manually define boundaries. To do so:
 
-  1. Press the **Start** button. This will open another GUI window.
+  1. Press the **Start** button next to **Drawing the  border**. This will open another GUI window.
   2. To begin drawing lines between clusters, click the **Draw Curve** button. Each click will allow you to place points and connect them, forming boundaries.
-  3. Once you’ve finished drawing borders for one cluster, press **Assign Labels** to label it.
-  4. Continue drawing boundaries until all points belong to a cluster.
+  3. Once you’ve finished drawing borders for one cluster, press **Assign Labels** to label it. This will close the polygon and assign the data points into a single cluster.
+  4. Continue the previous step until all points belong to a cluster.
   5. When finished, press the **Finish** button.
-  6. Return to the main GUI and click **Get Clusters** to finalize the clustering.
+  6. Return to the main GUI and click **Get Clusters**. All manually created clusters are now added to the clusters-database.
 
 This will help to refine clusters manually, especially in challenging cases.
 ![GUI-image](https://github.com/SamiraLashkari/CloudVolume_multibeam/blob/main/Drawing_clusters.jpg)
 
-## Result section (purple)
+## 🟣 Result section 
 
 - **Refining and Managing Result**:
 
-  After completing the initial clustering step, you can add these clusters to the result by pressing the **Add Clusters** button. The clusters will be updated based on their size and assigned to each cluster button, labeled from 1 to 40.
-
-  Additional options for refining clusters include (each cluster for these operations can be selected by checking the square beside its label):
-    
-  - **Remove Clusters**: Remove selected clusters from the results.
-  - **Merge Clusters**: Merge clusters to achieve the desired clustering arrangement.
-
-  After each operation (add, merge, or remove), click the **Update** button to view the changes in the image, which will refresh to reflect the updated clustering.
+  After completing the initial clustering step, you can add these clusters to the result by pressing the **Add Clusters** button. The cluster numbering will be updated based on their size. If clusters are added, the numbering is adapted based on the new size distribution. Be aware of this: cluster 4 may not be called clusters 4 again after clusters have been deleted and/or added. Always check the new numbers by pressing “Update clusters”. Clusters can be merged as well. To delete/add/merge (a) cluster(s), select them in the panel and click on the desired action.
 
   To reset or start over, use the following options:
   
@@ -157,21 +145,19 @@ This will help to refine clusters manually, especially in challenging cases.
   - **Convert All to Pointcloud**: Merges all points back into a single point cloud, allowing you to start the clustering process from the beginning.
 
     
-## Volume calculation (yellow)
+## 🟡 Volume calculation 
 
 **Interpolation**:
-- Estimate points between known data points in point cloud of each volume to fill the gap between pings (you can choose any cluster to process the rest)
+- In certain cases, the distance between datapoints may be too large, especially for multibeam data points. To reduce the gap, interpolation can be performed to generate data points between existing data ones. Choose the desired amount of interpolations and perform the step by clicking **start**.
 
 **Voxelization**:
-- Convert point cloud to voxel grid
-- Define the size of voxel
-- Set upper and lower thresholds for weighted voxelization (the default value for upper and lower threshold is d10 and d25 for number of points)
-- Calculate the volume without and with weighted voxelization
-   
+Converts the point cloud data into a voxel grid with a predefined voxel size. Upper and lower thresholds for weighted voxelization can be defined. Weighted voxelization calculates the amount of data points within each voxel and considers voxels as a whole if above the upper threshold and disregards them if below the lower threshold. In between, voxels are considered percentage-wise. The default value for upper and lower threshold is d10 (10th percentile) and d25 (25th percentile).
+The volume is calculated without and with weighted voxelization applied and added to the **volume results** section.  
 
-## Saving results (bright green)    
 
-In this section, you can select clusters to save by checking the box next to each cluster and then clicking the **Add Chosen Cluster** button. Once selected, the clusters will be added to the list in the bottom-left corner, with their volumes calculated using both methods mentioned before.
+## 🟠 Saving results     
+
+Select the desired clusters by checking the box next to them and click  the **Add Chosen Cluster** button. These clusters will be added to the table in the bottom-right, with their volumes calculated before **Volume** and after **Customized volume** weighted voxelization and interpolation.
 
 You can remove the last cluster from the list by clicking the **Remove Last Cluster** button. 
 
@@ -180,5 +166,5 @@ When all desired clusters are in the list, click **Save Clusters and Volume**. T
 - A `.csv` file containing all volume information for the selected clusters.
 - Individual clusters as `.pcd` files (point cloud format).
 
-This process ensures both the volume data and cluster geometries are preserved for further analysis.
+This ensures that both volume calculations and cluster geometries are preserved for further analysis.
     
